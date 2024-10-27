@@ -8,14 +8,14 @@ const page = () => {
 
   const handelSubmit = (e) => {
     e.preventDefault();
-    setMainTask((prevTasks) => [...prevTasks, { taskTitle, taskDescription }]);
+    setMainTask([...mainTask, { taskTitle, taskDescription }]);
     setTaskTitle("");
     setTaskDescription("");
   };
 
   const deleteTask = (idx) => {
     let copyTask = [...mainTask];
-    copyTask.splice(idx);
+    copyTask.splice(idx, 1);
     setMainTask(copyTask);
   };
 
@@ -38,11 +38,13 @@ const page = () => {
         >
           <td className="px-6 py-4 text-left">{task.taskTitle}</td>
           <td className="px-6 py-4 text-left">{task.taskDescription}</td>
-          <td className=" px-6 py-auto">
-            <button
-              onClick={() => deleteTask(idx)}
-              className="bg-red-500 px-3 py-2 rounded"
-            >
+          <td className="px-6 py-auto">
+            <button onClick={() => completeTask(idx)} className="bg-green-500 px-3 py-2 rounded">
+              Complete
+            </button>
+          </td>
+          <td className="px-6 py-auto">
+            <button onClick={() => deleteTask(idx)} className="bg-red-500 px-3 py-2 rounded">
               Delete
             </button>
           </td>
