@@ -8,18 +8,25 @@ const page = () => {
 
   const handelSubmit = (e) => {
     e.preventDefault();
-
-    setMainTask([...mainTask, { taskTitle, taskDescription }]);
-
+    setMainTask((prevTasks) => [...prevTasks, { taskTitle, taskDescription }]);
     setTaskTitle("");
     setTaskDescription("");
   };
+
+  const deleteTask = (idx) => {
+    let copyTask = [...mainTask];
+    copyTask.splice(idx);
+    setMainTask(copyTask);
+  };
+
   let renderTask;
 
   if (mainTask.length === 0) {
     renderTask = (
       <tr>
-        <td colSpan={2} className="text-center h-12">No Task Available</td>
+        <td colSpan={3} className="text-center h-12">
+          No Task Available
+        </td>
       </tr>
     );
   } else {
@@ -31,6 +38,14 @@ const page = () => {
         >
           <td className="px-6 py-4 text-left">{task.taskTitle}</td>
           <td className="px-6 py-4 text-left">{task.taskDescription}</td>
+          <td className=" px-6 py-auto">
+            <button
+              onClick={() => deleteTask(idx)}
+              className="bg-red-500 px-3 py-2 rounded"
+            >
+              Delete
+            </button>
+          </td>
         </tr>
       );
     });
@@ -105,6 +120,9 @@ const page = () => {
                 </th>
                 <th className="px-6 py-3 text-left font-semibold text-lg">
                   Description
+                </th>
+                <th className="px-6 py-3 text-left font-semibold text-lg">
+                  Delete Task
                 </th>
               </tr>
             </thead>
